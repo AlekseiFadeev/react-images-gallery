@@ -8,8 +8,8 @@ function App() {
         <UnsplashState>
             <BrowserRouter>
                 <div className="container w-auto h-auto">
-                    <h1 className="mt-5">Hello World!</h1>
                     <Switch>
+                        <Route path="/page/:id" component={Home}/>
                         <Route path="/" exact component={Home}/>
                     </Switch>
                 </div>

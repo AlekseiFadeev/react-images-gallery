@@ -14,9 +14,10 @@ export const UnsplashState = ({children}) => {
 
     const [state, dispatch] = useReducer(unsplashReducer, initialState)
 
-    const getImages = async images => {
+    const getImages = async (page = 0) => {
         setLoading()
-        const response = await axiosImages.get(`/photos/?page=0&per_page=9&client_id=${CLIENT_ID}`)
+
+        const response = await axiosImages.get(`/photos/?page=${page}&per_page=9&client_id=${CLIENT_ID}`)
 
         dispatch({
             type: GET_IMAGES,
@@ -30,11 +31,11 @@ export const UnsplashState = ({children}) => {
         })
     }
 
-    const {images, loading} = state
+    const {images, loading, page} = state
 
     return (
         <UnsplashContext.Provider value={{
-            getImages, setLoading, images, loading
+            getImages, setLoading, images, loading, page
         }}>
             {children}
         </UnsplashContext.Provider>

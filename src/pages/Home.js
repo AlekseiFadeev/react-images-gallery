@@ -1,14 +1,18 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {UnsplashContext} from "../context/unsplash/unsplashContext";
 import {Card} from "../components/Card";
 
-export const Home = () => {
+export const Home = ({match}) => {
     const {images, loading, getImages} = useContext(UnsplashContext)
+
+    useEffect(() => {
+        getImages(match.params.id)
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <>
-            <h1 onClick={getImages}>Test</h1>
-            <div className="row">
+            <div className="row mt-5">
                 {loading
                     ? <p className="container text-center">Загрузка...</p>
                     : images.map(image => (
