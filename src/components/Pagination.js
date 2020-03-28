@@ -1,22 +1,50 @@
-import React from "react";
+import React, {useContext} from "react";
+import {Link} from "react-router-dom";
+import {UnsplashContext} from "../context/unsplash/unsplashContext";
 
 export const Pagination = ({page}) => {
+    const {setPage} = useContext(UnsplashContext)
 
-    console.log(page)
+    const toPage = () => {
+        setPage(+page)
+    }
 
-    return (
-        <nav>
+    const PageItem = () => {
+        let pages = []
+        let thisPage = +page - 2
+
+        if (+page === 1 || +page === 2 || +page === 3) {
+            for (let i = 1; i <= 5; i++) {
+                pages.push(i)
+            }
+        } else {
+            for (let i = 0; i <= 4; i++) {
+                pages.push(thisPage + i)
+            }
+        }
+
+        return (
             <ul className="pagination justify-content-center">
-                <li className="page-item disabled">
-                    <a className="page-link" href="#" tabIndex="-1">Previous</a>
+                <li className={page === '1' ? 'page-item disabled' : 'page-item'}>
+                    <Link to={"/page/" + (+page - 1)} className="page-link" onClick={toPage}>Previous</Link>
                 </li>
-                <li className="page-item"><a className="page-link" href="#">{+page}</a></li>
-                <li className="page-item"><a className="page-link" href="#">{+page + 1}</a></li>
-                <li className="page-item"><a className="page-link" href="#">{+page + 2}</a></li>
+                {pages.map((item, i) => {
+                    return (
+                        <li className={+page === item ? 'page-item active' : 'page-item'} key={i}>
+                            <Link to={"/page/" + item} className="page-link" onClick={toPage}>{item}</Link>
+                        </li>
+                    )
+                })}
                 <li className="page-item">
-                    <a className="page-link" href="#">Next</a>
+                    <Link to={"/page/" + (+page + 1)} className="page-link" onClick={toPage}>Next</Link>
                 </li>
             </ul>
+        )
+    }
+
+    return (
+        <nav className="mt-5">
+            <PageItem/>
         </nav>
     )
 }
