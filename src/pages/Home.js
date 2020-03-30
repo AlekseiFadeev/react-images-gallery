@@ -3,6 +3,7 @@ import {UnsplashContext} from "../context/unsplash/unsplashContext";
 import {Card} from "../components/Card";
 import {Redirect, Switch} from "react-router-dom";
 import {Pagination} from "../components/Pagination";
+import {Search} from "../components/Search";
 
 export const Home = ({match}) => {
     const {images, loading, getImages, setPage} = useContext(UnsplashContext)
@@ -23,6 +24,7 @@ export const Home = ({match}) => {
 
     return (
         <>
+            <Search page={match.params.id}/>
             <Pagination page={match.params.id}/>
             <div className="row mt-5">
                 {loading

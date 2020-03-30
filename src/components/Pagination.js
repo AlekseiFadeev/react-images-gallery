@@ -5,8 +5,8 @@ import {UnsplashContext} from "../context/unsplash/unsplashContext";
 export const Pagination = ({page}) => {
     const {setPage} = useContext(UnsplashContext)
 
-    const toPage = () => {
-        setPage(+page)
+    const toPage = (page) => {
+        setPage(page)
     }
 
     const PageItem = () => {
@@ -26,24 +26,30 @@ export const Pagination = ({page}) => {
         return (
             <ul className="pagination justify-content-center">
                 <li className={page === '1' ? 'page-item disabled' : 'page-item'}>
-                    <Link to={"/page/" + (+page - 1)} className="page-link" onClick={toPage}>Previous</Link>
+                    <Link to={"/page/" + (+page - 1)} className="page-link" onClick={() => {
+                        toPage(+page - 1)
+                    }}>Previous</Link>
                 </li>
                 {pages.map((item, i) => {
                     return (
                         <li className={+page === item ? 'page-item active' : 'page-item'} key={i}>
-                            <Link to={"/page/" + item} className="page-link" onClick={toPage}>{item}</Link>
+                            <Link to={"/page/" + item} className="page-link" onClick={() => {
+                                toPage(item)
+                            }}>{item}</Link>
                         </li>
                     )
                 })}
                 <li className="page-item">
-                    <Link to={"/page/" + (+page + 1)} className="page-link" onClick={toPage}>Next</Link>
+                    <Link to={"/page/" + (+page + 1)} className="page-link" onClick={() => {
+                        toPage(+page + 1)
+                    }}>Next</Link>
                 </li>
             </ul>
         )
     }
 
     return (
-        <nav className="mt-5">
+        <nav className="mt-4">
             <PageItem/>
         </nav>
     )
